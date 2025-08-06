@@ -1,31 +1,40 @@
 const express = require('express');
-const db = require('./config/db');
+const cors = require('cors');
+const dotenv = require('dotenv');
+const mongoose = require('mongoose');
+
 const { redirectUser } = require('./controllers/urlController');
 const authRouter = require('./routes/authRoutes');
 const urlRouter = require('./routes/urlRoutes');
+
+dotenv.config();
 const app = express();
-const cors = require('cors');
-require('dotenv').config();
 
-// DB Connection 
-db();
-
-// Use CORS middleware
 app.use(cors());
-
-// json
 app.use(express.json());
 
-// routes
 app.use('/auth', authRouter);
 app.use('/url', urlRouter);
-app.get('/:shortUrl', redirectUser);
+app.get('/:shortUrl', redirectUser); // Always put this last
 
-app.get('/', (req, res)=>{
-    res.send('Short-urilify Project');
+app.get('/', (req, res) => {
+  res.send('Short-urlify Project');
 });
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, ()=>{
-    console.log(`Server is running on PORT ${PORT}`);
-});
+// ✅ Connect DB and THEN start server
+const startServer = async () => {
+  try {
+    await mongoose.connect(process.env.MONGO_URI);
+    console.log('MongoDB Connected');
+    
+    const PORT = process.env.PORT || 5000;
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+
+  } catch (error) {
+    console.error('❌ MongoDB connection failed:', error);
+  }
+};
+
+startServer();
