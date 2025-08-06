@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require('bcryptjs');
 const User = require("../models/authSchema");
+const BlacklistedToken = require("../models/blacklistSchema");
 
 // Register User
 const createUser = async (req, res)=>{
@@ -74,4 +75,31 @@ const loginUser = async (req, res)=>{
     }
 };
 
-module.exports = { createUser, loginUser };
+// Logout User
+const logoutUser = async (req, res)=>{
+    try {
+        const token = req.headers.authorization?.split(' ')[1];
+        if(!token){
+            return res.status(400).json({ message: 'No token provided' });
+        }
+
+        const alreadyBlacklisted = await BlacklistedToken.findOne({ token });
+        if (alreadyBlacklisted) {
+            return res.status(400).json({ message: 'Token already blacklisted. Please login again.' });
+        }
+
+        const decoded = jwt.decode(token);
+
+        await BlacklistedToken.create({
+            token,
+            expiresAt: new Date(decoded.exp * 1000)
+        });
+
+        res.status(200).json({ message: 'User Logged Out Successfully' });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ message: 'Something went wrong' });
+    }
+};
+
+module.exports = { createUser, loginUser, logoutUser };
