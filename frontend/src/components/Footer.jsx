@@ -8,7 +8,7 @@ const Footer = () => {
             &copy; {new Date().getFullYear()} ShortUrliFy. All Rights Reserved.
           </p>
           <a
-            href="https://www.linkedin.com/in/your-profile/" // <-- Update this with your actual LinkedIn profile URL
+            href="https://www.linkedin.com/in/nitin-gharwal-5b4651249"
             target="_blank"
             rel="noopener noreferrer"
             className="text-sm font-medium text-blue-600 dark:text-blue-500 hover:underline transition-colors"
