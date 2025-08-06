@@ -10,12 +10,7 @@ const urlRouter = require('./routes/urlRoutes');
 dotenv.config();
 const app = express();
 
-const corsOptions = {
-  origin: ['http://localhost:5173', 'https://short-urlify.netlify.app'], // allow local + deployed frontend
-  credentials: true, // optional if you send cookies
-};
-
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(express.json());
 
 app.use('/auth', authRouter);
