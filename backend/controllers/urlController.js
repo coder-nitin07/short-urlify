@@ -40,6 +40,7 @@ const redirectUser = async (req, res)=>{
         }
 
         getShortURL.clicks += 1;
+        getShortURL.lastClicked = new Date();
         await getShortURL.save();
 
         return res.redirect(301, getShortURL.originalUrl);

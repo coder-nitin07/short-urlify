@@ -23,6 +23,9 @@ const urlSchema = new mongoose.Schema({
     clicks: {
         type: Number,
         default: 0
+    },
+    lastClicked: {
+        type: Date
     }
 }, { timestamps: true });
 
