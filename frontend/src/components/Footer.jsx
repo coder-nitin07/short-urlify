@@ -1,14 +1,21 @@
-// src/components/Footer.jsx
+
 const Footer = () => {
   return (
-    <footer className="bg-gray-200 dark:bg-gray-900 text-gray-800 dark:text-gray-300 text-center py-4 mt-10">
-      <div className="container mx-auto px-4">
-        <p className="text-sm">
-          © {new Date().getFullYear()} ShortUrliFy. All rights reserved.
-        </p>
-        <p className="text-xs mt-1">
-            <a href="#" className="underline hover:text-blue-500">GitHub</a>
-        </p>
+    <footer className="w-full bg-white dark:bg-neutral-900 border-t border-neutral-200 dark:border-neutral-800 mt-auto">
+      <div className="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between">
+          <p className="text-sm text-neutral-600 dark:text-neutral-400">
+            &copy; {new Date().getFullYear()} ShortUrliFy. All Rights Reserved.
+          </p>
+          <a
+            href="https://www.linkedin.com/in/your-profile/" // <-- Update this with your actual LinkedIn profile URL
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm font-medium text-blue-600 dark:text-blue-500 hover:underline transition-colors"
+          >
+            LinkedIn
+          </a>
+        </div>
       </div>
     </footer>
   );
