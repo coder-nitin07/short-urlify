@@ -30,24 +30,27 @@ const urlShortner = async (req, res)=>{
 };
 
 // Redirect User
-const redirectUser = async (req, res)=>{
-    try {
-        const { shortUrl } = req.params;
-        const getShortURL = await URL.findOne({ shortId: shortUrl });
+const redirectUser = async (req, res)=> {
+  try {
+    const { shortUrl } = req.params;
+    console.log("PARAM:", shortUrl);
 
-        if(!getShortURL){
-            return res.status(404).json({ message: 'Not a valid short URL' });
-        }
+    const getShortURL = await URL.findOne({ shortId: shortUrl });
+    console.log("DB Result:", getShortURL);
 
-        getShortURL.clicks += 1;
-        getShortURL.lastClicked = new Date();
-        await getShortURL.save();
-
-        return res.redirect(301, getShortURL.originalUrl);
-    } catch (err) {
-        console.log(err);
-        res.status(500).json({ message: 'Something went wrong' });
+    if (!getShortURL) {
+      return res.status(404).json({ message: 'Not a valid short URL' });
     }
+
+    getShortURL.clicks += 1;
+    getShortURL.lastClicked = new Date();
+    await getShortURL.save();
+
+    return res.redirect(301, getShortURL.originalUrl);
+  } catch (err) {
+    console.error("Redirect Error:", err);
+    res.status(500).json({ message: 'Something went wrong', error: err.message });
+  }
 };
 
 // Get All URL Shortner of a User
