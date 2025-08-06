@@ -38,7 +38,6 @@ const CheckIcon = (props) => (
 
 
 const Home = () => {
-  // --- All original state and logic are preserved below ---
   const [longUrl, setLongUrl] = useState("");
   const [shortUrl, setShortUrl] = useState("");
   const [copied, setCopied] = useState(false);
@@ -79,9 +78,9 @@ const Home = () => {
     setCopied(true);
     setTimeout(() => {
       setCopied(false);
-    }, 3000); // Reset after 3 seconds
+    }, 3000); 
   };
-  // --- End of original logic section ---
+  
 
   return (
     <main className="w-full bg-neutral-100 dark:bg-black py-10 px-4 h-[100vh] flex items-center">
