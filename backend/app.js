@@ -1,6 +1,7 @@
 const express = require('express');
 const db = require('./config/db');
 const authRouter = require('./routes/authRoutes');
+const urlRouter = require('./routes/urlRoutes');
 const app = express();
 require('dotenv').config();
 
@@ -12,6 +13,7 @@ app.use(express.json());
 
 // routes
 app.use('/auth', authRouter);
+app.use('/url', urlRouter);
 
 app.get('/', (req, res)=>{
     res.send('Short-urilify Project');
