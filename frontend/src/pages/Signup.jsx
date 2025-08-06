@@ -65,21 +65,29 @@ const Signup = () => {
     setShowPassword((prev) => !prev);
   }, []);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError("");
-    setLoading(true);
+ const handleSubmit = async (e) => {
+  e.preventDefault();
+  setError("");
+  setLoading(true);
 
-    try {
-      await axios.post("http://localhost:3000/auth/register", formData);
+  try {
+    const res = await axios.post("http://localhost:3000/auth/register", formData);
+
+    const token = res.data?.token;
+    if (token) {
+      localStorage.setItem("token", token);  // ✅ This was missing
       navigate("/home");
-    } catch (err) {
-      const message = err.response?.data?.message || "Signup failed. Please try again.";
-      setError(message);
-    } finally {
-      setLoading(false);
+    } else {
+      setError("No token received. Please try again.");
     }
-  };
+  } catch (err) {
+    const message = err.response?.data?.message || "Signup failed. Please try again.";
+    setError(message);
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   // --- Render ---
   return (
