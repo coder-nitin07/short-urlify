@@ -17,9 +17,9 @@ app.use(cors());
 app.use(express.json());
 
 // routes
-app.get('/:shortUrl', redirectUser);
 app.use('/auth', authRouter);
 app.use('/url', urlRouter);
+app.get('/:shortUrl', redirectUser);
 
 app.get('/', (req, res)=>{
     res.send('Short-urilify Project');
