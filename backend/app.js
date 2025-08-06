@@ -24,7 +24,7 @@ app.get('/', (req, res) => {
 // ✅ Connect DB and THEN start server
 const startServer = async () => {
   try {
-    await mongoose.connect(process.env.MONGO_URI);
+    await mongoose.connect(process.env.MONGODB_URI);
     console.log('MongoDB Connected');
     
     const PORT = process.env.PORT || 5000;
