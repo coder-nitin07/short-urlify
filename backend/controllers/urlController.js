@@ -1,3 +1,4 @@
+const User = require("../models/authSchema");
 const URL = require("../models/urlSchema");
 const { nanoid } = require('nanoid');
 
@@ -48,4 +49,27 @@ const redirectUser = async (req, res)=>{
     }
 };
 
-module.exports = { urlShortner, redirectUser };
+// Get All URL Shortner of a User
+const getAllUserUrls = async (req, res)=>{
+    try {
+        const userId = req.user.id;
+        const getUser = await User.findById(userId);
+
+        if(!getUser){
+            return res.status(404).json({ message: 'No User Found' });
+        }
+
+        const userUrls = await URL.find({ userId }).sort({ createdAt: -1 });
+
+        if(userUrls.length === 0){
+            return res.status(200).json({ message: 'No URL found' });
+        }
+
+        res.status(200).json({ message: 'Successfully Fetch User URLs', urls: userUrls });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ message: 'Something went wrong' });
+    }
+};
+
+module.exports = { urlShortner, redirectUser, getAllUserUrls };
