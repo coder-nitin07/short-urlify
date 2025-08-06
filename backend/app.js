@@ -1,5 +1,6 @@
 const express = require('express');
 const db = require('./config/db');
+const { redirectUser } = require('./controllers/urlController');
 const authRouter = require('./routes/authRoutes');
 const urlRouter = require('./routes/urlRoutes');
 const app = express();
@@ -16,6 +17,7 @@ app.use(cors());
 app.use(express.json());
 
 // routes
+app.get('/:shortUrl', redirectUser);
 app.use('/auth', authRouter);
 app.use('/url', urlRouter);
 
