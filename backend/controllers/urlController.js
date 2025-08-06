@@ -96,4 +96,28 @@ const deleteUserURL = async (req, res)=>{
     }
 };
 
-module.exports = { urlShortner, redirectUser, getAllUserUrls, deleteUserURL };
+// Analytics API
+const getAnalytics = async (req, res)=>{
+    try {
+        const { urlId } = req.params;
+        const url = await URL.findOne({ shortId: urlId });
+
+        if(!url){
+            return res.status(404).json({ message: 'URL not found' });
+        }
+
+        res.status(200).json({ 
+            message: 'Get Analystics data',  
+            originalUrl: url.originalUrl,
+            shortUrl: url.shortUrl,
+            clicks: url.clicks,
+            createdAt: url.createdAt,
+            lastClicked: url.lastClicked
+        });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ message: 'Something went wrong' });
+    }
+};
+
+module.exports = { urlShortner, redirectUser, getAllUserUrls, deleteUserURL, getAnalytics };
