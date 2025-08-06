@@ -28,5 +28,24 @@ const urlShortner = async (req, res)=>{
     }
 };
 
+// Redirect User
+const redirectUser = async (req, res)=>{
+    try {
+        const { shortUrl } = req.params;
+        const getShortURL = await URL.findOne({ shortId: shortUrl });
 
-module.exports = { urlShortner };
+        if(!getShortURL){
+            return res.status(404).json({ message: 'Not a valid short URL' });
+        }
+
+        getShortURL.clicks += 1;
+        await getShortURL.save();
+
+        return res.redirect(301, getShortURL.originalUrl);
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ message: 'Something went wrong' });
+    }
+};
+
+module.exports = { urlShortner, redirectUser };
