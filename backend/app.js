@@ -15,13 +15,12 @@ app.use(express.json());
 
 app.use('/auth', authRouter);
 app.use('/url', urlRouter);
-app.get('/:shortUrl', redirectUser); // Always put this last
+app.get('/:shortUrl', redirectUser);
 
 app.get('/', (req, res) => {
   res.send('Short-urlify Project');
 });
 
-// ✅ Connect DB and THEN start server
 const startServer = async () => {
   try {
     await mongoose.connect(process.env.MONGODB_URI);
@@ -33,7 +32,7 @@ const startServer = async () => {
     });
 
   } catch (error) {
-    console.error('❌ MongoDB connection failed:', error);
+    console.error('MongoDB connection failed:', error);
   }
 };
 

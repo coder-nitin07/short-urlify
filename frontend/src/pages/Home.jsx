@@ -46,7 +46,7 @@ const Home = () => {
   };
 
   return (
-    <div className="max-w-xl mx-auto px-4 py-10">
+    <div className="max-w-xl mx-auto px-4 py-10 flex flex-col justify-center h-[100vh]">
       <h2 className="text-2xl font-bold mb-6 text-center dark:text-white">
         🔗 Shorten Your URL
       </h2>
