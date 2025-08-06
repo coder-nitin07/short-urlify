@@ -13,7 +13,7 @@ const urlShortner = async (req, res)=>{
 
         const shortId = nanoid(6);
 
-        const shortUrl = `https://shorturilify.com/${shortId}`;
+        const shortUrl = `https://short-urlify.onrender.com/${shortId}`;
 
         const generateShortURL = await URL.create({
             userId: req.user.id,
