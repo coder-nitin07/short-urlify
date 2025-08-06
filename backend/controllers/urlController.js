@@ -72,4 +72,27 @@ const getAllUserUrls = async (req, res)=>{
     }
 };
 
-module.exports = { urlShortner, redirectUser, getAllUserUrls };
+// Delete An URLs
+const deleteUserURL = async (req, res)=>{
+    try {
+        const userId = req.user.id; 
+        const { urlId } = req.params;
+        
+        const url = await URL.findById(urlId);
+        if (!url) {
+            return res.status(404).json({ message: 'URL not found' });
+        }
+
+        if (url.userId.toString() !== userId) {
+            return res.status(403).json({ message: 'Unauthorized to delete this URL' });
+        }
+
+        await URL.findByIdAndDelete(urlId);
+        res.status(200).json({ message: 'URL deleted successfully' });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ message: 'Something went wrong' });
+    }
+};
+
+module.exports = { urlShortner, redirectUser, getAllUserUrls, deleteUserURL };
