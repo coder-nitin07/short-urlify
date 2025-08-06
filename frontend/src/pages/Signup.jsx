@@ -1,47 +1,47 @@
 import { useState } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { toast } from 'react-toastify';
 
 const Signup = () => {
   const navigate = useNavigate();
-  const [ formData, setFormData ] = useState({
-      name: '',
-      email: '',
-      password: ''
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: ''
   });
 
-  const [ showPassword, setShowPassword ] = useState(false);
-  const [ loading, setLoading ] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
-  const handleChange = (e)=>{
-      setFormData({ ...formData, [ e.target.name ]: e.target.value });
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const togglePassword = () =>{
-      setShowPassword((prev)=> !prev);
+  const togglePassword = () => {
+    setShowPassword((prev) => !prev);
   };
 
-  const handleSubmit = async (e)=>{
-      e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-      console.log(formData);
+    console.log(formData);
 
-      setLoading(true);
+    setError('');
+    setLoading(true);
 
-      try {
-        const res = await axios.post('http://localhost:3000/auth/register', formData);
-        toast.success('Signup successful! Please login.');
-        navigate('/login');
-      } catch (err) {
-        const message = err.response?.data?.message || 'Signup failed. Try again.';
-        toast.error(message);
-      } finally {
-        setLoading(false);
-      }
+    try {
+      const res = await axios.post('http://localhost:3000/auth/register', formData);
+      navigate('/login');
+    } catch (err) {
+      const message = err.response?.data?.message || 'Signup failed. Try again.';
+      setError(message);
+    } finally {
+      setLoading(false);
+    }
   };
   return (
-     <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900">
       <div className="w-full max-w-md bg-white dark:bg-gray-800 rounded-xl shadow-md p-8">
         <h2 className="text-2xl font-semibold mb-6 text-center text-gray-900 dark:text-white">
           Create Your Account
@@ -100,6 +100,12 @@ const Signup = () => {
               </button>
             </div>
           </div>
+
+          {error && (
+            <div className="bg-red-600 text-white px-4 py-2 rounded-md text-sm text-center">
+              {error}
+            </div>
+          )}
 
           {/* Submit */}
           <button
