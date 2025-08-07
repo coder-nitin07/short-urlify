@@ -4,7 +4,6 @@ import Login from './pages/Login';
 import Home from './pages/Home';
 import AllUrls from './pages/AllUrls';
 import Navbar from './components/Navbar';
-import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Footer from './components/Footer';
 
