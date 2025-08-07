@@ -71,7 +71,7 @@ const Signup = () => {
   setLoading(true);
 
   try {
-    const res = await axios.post("http://localhost:3000/auth/register", formData);
+    const res = await axios.post("https://short-urlify.onrender.com/auth/register", formData);
 
     const token = res.data?.token;
     if (token) {
