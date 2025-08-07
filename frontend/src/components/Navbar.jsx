@@ -27,8 +27,8 @@ const Navbar = () => {
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
     setToken(storedToken);
-    setMenuOpen(false); // close menu on route change
-  }, [location.pathname]);
+    setMenuOpen(false);
+  }, [location.pathname, token]);
 
   const isActive = (path) => location.pathname === path;
 
