@@ -68,7 +68,7 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const res = await axios.post("http://localhost:3000/auth/login", formData);
+      const res = await axios.post("https://short-urlify.onrender.com/auth/login", formData);
       const token = res.data?.token;
 
       if (token) {
