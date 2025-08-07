@@ -46,7 +46,7 @@ const redirectUser = async (req, res)=> {
     getShortURL.lastClicked = new Date();
     await getShortURL.save();
 
-    return res.redirect(301, getShortURL.originalUrl);
+    return res.redirect(302, getShortURL.originalUrl);
   } catch (err) {
     console.error("Redirect Error:", err);
     res.status(500).json({ message: 'Something went wrong', error: err.message });
